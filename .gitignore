@@ -8,3 +8,10 @@ uploads/*
 !uploads/.gitkeep
 .DS_Store
 npm-debug.log*
+
+uploads/*
+!.gitkeep
+
+npm-debug.log
+.DS_Store
+coverage/
