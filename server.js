@@ -1,2 +1,27 @@
-require('dotenv').config();const app=require('./src/app');const {sequelize}=require('./src/models');const port=Number(process.env.APP_PORT||5000);
-(async()=>{try{await sequelize.authenticate();console.log('MySQL connected');if(process.env.NODE_ENV==='development'&&process.env.DB_SYNC==='true')await sequelize.sync();app.listen(port,'0.0.0.0',()=>console.log(`Filmycart API listening on ${port}`));}catch(e){console.error('Startup failed:',e);process.exit(1);}})();
+require('dotenv').config();
+const app=require('./src/app');
+const {sequelize}=require('./src/models');
+const port=Number(process.env.APP_PORT||5000);
+
+(async () => {
+    try {
+        await sequelize.authenticate();
+
+        console.log('MySQL connected');
+
+        if (
+            process.env.NODE_ENV === 'development' &&
+            process.env.DB_SYNC === 'true'
+        ) {
+            await sequelize.sync();
+        }
+
+        app.listen(port, '0.0.0.0', () => {
+            console.log(`Filmycart API listening on ${port}`);
+        });
+
+    } catch (e) {
+        console.error('Startup failed:', e);
+        process.exit(1);
+    }
+})();
