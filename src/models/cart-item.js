@@ -1,1 +1,39 @@
-module.exports = (sequelize, DataTypes) => sequelize.define('CartItem', { id: { type: DataTypes.BIGINT.UNSIGNED, autoIncrement: true, primaryKey: true }, userId: { type: DataTypes.BIGINT.UNSIGNED, allowNull: false }, productId: { type: DataTypes.BIGINT.UNSIGNED, allowNull: false }, quantity: { type: DataTypes.INTEGER.UNSIGNED, allowNull: false, defaultValue: 1 } }, { tableName: 'cart_items', indexes: [{ unique: true, fields: ['user_id','product_id'] }] });
+module.exports = (sequelize, DataTypes) => {
+    const CartItem = sequelize.define(
+        'CartItem',
+        {
+            id: {
+                type: DataTypes.BIGINT.UNSIGNED,
+                autoIncrement: true,
+                primaryKey: true
+            },
+
+            userId: {
+                type: DataTypes.BIGINT.UNSIGNED,
+                allowNull: false
+            },
+
+            productId: {
+                type: DataTypes.BIGINT.UNSIGNED,
+                allowNull: false
+            },
+
+            quantity: {
+                type: DataTypes.INTEGER.UNSIGNED,
+                allowNull: false,
+                defaultValue: 1
+            }
+        },
+        {
+            tableName: 'cart_items',
+            indexes: [
+                {
+                    unique: true,
+                    fields: ['user_id', 'product_id']
+                }
+            ]
+        }
+    );
+
+    return CartItem;
+};

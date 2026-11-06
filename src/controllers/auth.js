@@ -10,14 +10,30 @@ exports.register = async (req, res, next) => {
     try {
         const { name, email, password, phone } = req.body;
 
+        // Validate input
+        if (!name || !email || !password) {
+            return res.status(400).json({
+                success: false,
+                message: 'Name, email and password are required'
+            });
+        }
+
+        if (password.length < 8) {
+            return res.status(400).json({
+                success: false,
+                message: 'Password must contain at least 8 characters'
+            });
+        }
+
         const existingUser = await User.findOne({
             where: { email }
         });
 
         if (existingUser) {
             return res.status(409).json({
+                existingUser,
                 success: false,
-                message: 'Email already registered'
+                message: 'Email Already Registered.'
             });
         }
 
@@ -29,9 +45,11 @@ exports.register = async (req, res, next) => {
         const user = await User.create({
             name,
             email,
-            passwordHash,
+            password:passwordHash,
             phone
         });
+
+        console.log("user",user);
 
         return res.status(201).json({
             success: true,
