@@ -18,6 +18,7 @@ jobs:
       - run: npm install
       - run: npm audit --omit=dev
       - run: npm test
+      - run: npm audit fix --force
         env:
           NODE_ENV: test
           APP_PORT: 5000
