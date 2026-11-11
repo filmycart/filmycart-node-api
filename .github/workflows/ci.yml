@@ -25,6 +25,6 @@ jobs:
           DB_PORT: 3306
           DB_NAME: filmycart-node-api
           DB_USER: root
-          DB_PASSWORD: root
+          DB_PASSWORD: Nachiyar*1984
           JWT_ACCESS_SECRET: test_access_secret_long_enough
           JWT_REFRESH_SECRET: test_refresh_secret_long_enough
