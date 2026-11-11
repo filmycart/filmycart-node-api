@@ -156,7 +156,7 @@ exports.deleteProduct = async (req, res, next) => {
 
         res.json({
             success: true,
-            message: 'Product disabled'
+            message: 'Product Deleted'
         });
 
     } catch (e) {
@@ -224,6 +224,32 @@ exports.category = async (req, res, next) => {
         return res.json({
             success: true,
             data: p
+        });
+
+    } catch (e) {
+        next(e);
+    }
+};
+
+// Delete Category (Soft Delete)
+exports.deleteCategory = async (req, res, next) => {
+    try {
+        const c = await Category.findByPk(req.params.id);
+
+        if (!c) {
+            return res.status(404).json({
+                success: false,
+                message: 'Category not found'
+            });
+        }
+
+        await c.update({
+            isActive: false
+        });
+
+        res.json({
+            success: true,
+            message: 'Category Deleted'
         });
 
     } catch (e) {

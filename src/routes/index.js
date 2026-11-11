@@ -40,6 +40,7 @@ router.delete('/products/:id',auth,roles('admin'),c.deleteProduct);
 router.get('/categories',c.categories);
 router.post('/categories',auth,roles('admin'),[body('name').notEmpty(),body('slug').notEmpty()],validate,c.createCategory);
 router.put('/categories/:id',auth,roles('admin'),c.updateCategory);
+router.delete('/categories/:id',auth,roles('admin'),c.deleteCategory);
 
 router.get('/sub-categories',c.subCategories);
 router.post('/sub-categories',auth,roles('admin'),[body('name').notEmpty(),body('slug').notEmpty()],validate,c.createSubCategory);
