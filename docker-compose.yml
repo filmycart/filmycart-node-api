@@ -2,10 +2,14 @@ services:
   api:
     build: .
     restart: unless-stopped
-    env_file: .env
-    ports: ["5000:5000"]
+    env_file:
+      - .env
+    ports:
+      - "5000:5000"
     depends_on:
-      mysql: { condition: service_healthy }
+      mysql:
+        condition: service_healthy
+
   mysql:
     image: mysql:8.0
     restart: unless-stopped
@@ -14,11 +18,16 @@ services:
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-    volumes: [mysql_data:/var/lib/mysql]
+    volumes:
+      - mysql_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-p${MYSQL_ROOT_PASSWORD}"]
+      test:
+        - CMD-SHELL
+        - mysqladmin ping -h 127.0.0.1 -uroot -p"$${MYSQL_ROOT_PASSWORD}" --silent
       interval: 10s
       timeout: 5s
-      retries: 10
+      retries: 15
+      start_period: 40s
+
 volumes:
   mysql_data:

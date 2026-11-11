@@ -1,1 +1,22 @@
-module.exports = (...roles) => (req, res, next) => { if (!req.user || !roles.includes(req.user.role)) return res.status(403).json({ success:false, message:'Forbidden' }); next(); };
+module.exports = (...roles) => {
+    return (req, res, next) => {
+        // Check whether user is authenticated
+        if (!req.user) {
+            return res.status(401).json({
+                success: false,
+                message: 'Unauthorized. Please login first.'
+            });
+        }
+
+        // Check whether user has the required role
+        if (!roles.includes(req.user.role)) {
+            return res.status(403).json({
+                success: false,
+                message: 'Forbidden. You do not have permission to access this resource.'
+            });
+        }
+
+        // User is authorized
+        next();
+    };
+};

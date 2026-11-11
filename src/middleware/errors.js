@@ -6,7 +6,7 @@ module.exports = (err, req, res, next) => {
     res.status(status).json({
         success: false,
         message: status === 500
-            ? 'Internal server error'
+            ? 'Internal server error'+err
             : err.message,
 
         ...(process.env.NODE_ENV === 'development'
